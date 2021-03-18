@@ -1,0 +1,14 @@
+{% extends "mail_templated/base.tpl" %}
+{% load humanize %}
+
+{% block subject %}
+{{ c.customer.first_name | capfirst }}, remind you that you have been missing lessons for over a week!
+{% endblock %}
+
+{% block body %}
+Dear {{ c.customer.first_name | capfirst }},
+
+It's a reminder that you have been missing lessons for over a week!
+
+{% include 'mailer/_signature.html' %}
+{% endblock %}

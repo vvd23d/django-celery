@@ -4,6 +4,8 @@ from datetime import timedelta
 import environ
 from easy_thumbnails.conf import Settings as thumbnail_settings
 
+from celery.schedules import crontab
+
 root = environ.Path(__file__) - 3        # three folder back (/a/b/c/ - 3 = /)
 env = environ.Env(DEBUG=(bool, False),)  # set default values and casting
 environ.Env.read_env()                   # reading .env file
@@ -320,6 +322,10 @@ CELERYBEAT_SCHEDULE = {
     'bill_timeline_entries': {
         'task': 'accounting.tasks.bill_timeline_entries',
         'schedule': timedelta(minutes=1),
+    },
+    'reminder_7days_not_take_lessons': {
+        'task': 'timeline.tasks.reminder_7days_not_take_lessons',
+        'schedule': crontab(minute=0, hour=0),
     },
 }
 
